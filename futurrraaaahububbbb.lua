@@ -262,9 +262,11 @@ local VALID_KEY = "zDg4z'R9rj3_b1_{ax_8bDzGB2;294-vt=8~,%6$46!{sgNJ|+"
 VerifyKeyBtn.MouseButton1Click:Connect(function()
     local enteredKey = KeyInput.Text
     if enteredKey == VALID_KEY then
-        StatusLabel.Text = "Key valid — access granted."
+        StatusLabel.Text = "Correct Key"
+        StatusLabel.TextColor3 = Color3.fromRGB(60, 200, 100)
     else
-        StatusLabel.Text = "Invalid key."
+        StatusLabel.Text = "Wrong Key"
+        StatusLabel.TextColor3 = Color3.fromRGB(220, 60, 60)
     end
 end)
 
