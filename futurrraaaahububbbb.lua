@@ -298,10 +298,21 @@ VerifyKeyBtn.MouseButton1Click:Connect(function()
         saveKey(enteredKey)
         task.wait(0.4)
         ScreenGui.Enabled = false
+        local hubOk, hubErr = true, nil
         if hubGuiRef then
             hubGuiRef.Enabled = true
         else
-            openHub()
+            hubOk, hubErr = pcall(openHub)
+        end
+        if not hubOk then
+            warn("FUTURAHUB: openHub() failed: " .. tostring(hubErr))
+            if hubGuiRef then
+                hubGuiRef:Destroy()
+                hubGuiRef = nil
+            end
+            ScreenGui.Enabled = true
+            StatusLabel.Text = "Failed to open the hub, see console"
+            StatusLabel.TextColor3 = Color3.fromRGB(220, 60, 60)
         end
     else
         StatusLabel.Text = "Wrong Key"
@@ -1604,9 +1615,17 @@ function openHub()
 end
 
 -- === Auto-login with a saved key ===
-local savedKey = loadSavedKey()
-if savedKey == VALID_KEY then
-    openHub()
+local autoOk, savedKey = pcall(loadSavedKey)
+if autoOk and savedKey == VALID_KEY then
+    local hubOk, hubErr = pcall(openHub)
+    if not hubOk then
+        warn("FUTURAHUB: openHub() failed during auto-login, falling back to key screen: " .. tostring(hubErr))
+        if hubGuiRef then
+            hubGuiRef:Destroy()
+            hubGuiRef = nil
+        end
+        ScreenGui.Enabled = true
+    end
 else
     ScreenGui.Enabled = true
 end
