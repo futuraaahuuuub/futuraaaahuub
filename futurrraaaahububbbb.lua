@@ -185,8 +185,10 @@ local function openKeyLink(url)
 
     if tryCall(env.setclipboard or setclipboard, url) then
         StatusLabel.Text = "Link copied to clipboard — paste it in your browser."
+        StatusLabel.TextColor3 = Color3.fromRGB(160, 160, 160)
     else
         StatusLabel.Text = "Couldn't copy the link: " .. url
+        StatusLabel.TextColor3 = Color3.fromRGB(220, 60, 60)
     end
 end
 
