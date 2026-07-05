@@ -159,22 +159,71 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Parent = ContentFrame
 
 -- === Section: key system ===
-local GetKeyBtn = Instance.new("TextButton")
-GetKeyBtn.Size = UDim2.new(1, 0, 0, 32)
-GetKeyBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-GetKeyBtn.Text = "Get Key"
-GetKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-GetKeyBtn.Font = Enum.Font.Gotham
-GetKeyBtn.TextSize = 14
-GetKeyBtn.LayoutOrder = 1
-GetKeyBtn.Parent = ContentFrame
+local LINKVERTISE_URL = "https://link-center.net/7196939/eF789xOEkNuz"
+local LOOTLABS_URL = "https://lootdest.org/s?4j1vkzjr"
 
-local GetKeyCorner = Instance.new("UICorner")
-GetKeyCorner.CornerRadius = UDim.new(0, 6)
-GetKeyCorner.Parent = GetKeyBtn
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Size = UDim2.new(1, 0, 0, 16)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Text = ""
+StatusLabel.TextColor3 = Color3.fromRGB(160, 160, 160)
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.TextSize = 11
+StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+StatusLabel.LayoutOrder = 5
+StatusLabel.Parent = ContentFrame
 
-GetKeyBtn.MouseButton1Click:Connect(function()
-    -- === Put your "get key" link logic here ===
+local function tryCall(fn, ...)
+    if type(fn) ~= "function" then
+        return false
+    end
+    return pcall(fn, ...)
+end
+
+local function openKeyLink(url)
+    local env = getgenv and getgenv() or {}
+
+    if tryCall(env.setclipboard or setclipboard, url) then
+        StatusLabel.Text = "Link copied to clipboard — paste it in your browser."
+    else
+        StatusLabel.Text = "Couldn't copy the link: " .. url
+    end
+end
+
+local GetKeyLinkvertiseBtn = Instance.new("TextButton")
+GetKeyLinkvertiseBtn.Size = UDim2.new(1, 0, 0, 32)
+GetKeyLinkvertiseBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+GetKeyLinkvertiseBtn.Text = "Get Key (Linkvertise)"
+GetKeyLinkvertiseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetKeyLinkvertiseBtn.Font = Enum.Font.Gotham
+GetKeyLinkvertiseBtn.TextSize = 14
+GetKeyLinkvertiseBtn.LayoutOrder = 1
+GetKeyLinkvertiseBtn.Parent = ContentFrame
+
+local GetKeyLinkvertiseCorner = Instance.new("UICorner")
+GetKeyLinkvertiseCorner.CornerRadius = UDim.new(0, 6)
+GetKeyLinkvertiseCorner.Parent = GetKeyLinkvertiseBtn
+
+GetKeyLinkvertiseBtn.MouseButton1Click:Connect(function()
+    openKeyLink(LINKVERTISE_URL)
+end)
+
+local GetKeyLootlabsBtn = Instance.new("TextButton")
+GetKeyLootlabsBtn.Size = UDim2.new(1, 0, 0, 32)
+GetKeyLootlabsBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+GetKeyLootlabsBtn.Text = "Get Key (Lootlabs)"
+GetKeyLootlabsBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetKeyLootlabsBtn.Font = Enum.Font.Gotham
+GetKeyLootlabsBtn.TextSize = 14
+GetKeyLootlabsBtn.LayoutOrder = 2
+GetKeyLootlabsBtn.Parent = ContentFrame
+
+local GetKeyLootlabsCorner = Instance.new("UICorner")
+GetKeyLootlabsCorner.CornerRadius = UDim.new(0, 6)
+GetKeyLootlabsCorner.Parent = GetKeyLootlabsBtn
+
+GetKeyLootlabsBtn.MouseButton1Click:Connect(function()
+    openKeyLink(LOOTLABS_URL)
 end)
 
 local KeyInput = Instance.new("TextBox")
@@ -187,7 +236,7 @@ KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 KeyInput.ClearTextOnFocus = false
 KeyInput.Font = Enum.Font.Gotham
 KeyInput.TextSize = 14
-KeyInput.LayoutOrder = 2
+KeyInput.LayoutOrder = 3
 KeyInput.Parent = ContentFrame
 
 local KeyInputCorner = Instance.new("UICorner")
@@ -201,7 +250,7 @@ VerifyKeyBtn.Text = "Verify Key"
 VerifyKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 VerifyKeyBtn.Font = Enum.Font.Gotham
 VerifyKeyBtn.TextSize = 14
-VerifyKeyBtn.LayoutOrder = 3
+VerifyKeyBtn.LayoutOrder = 4
 VerifyKeyBtn.Parent = ContentFrame
 
 local VerifyKeyCorner = Instance.new("UICorner")
@@ -286,37 +335,3 @@ GameLabel.TextSize = 12
 GameLabel.TextXAlignment = Enum.TextXAlignment.Left
 GameLabel.TextTruncate = Enum.TextTruncate.AtEnd
 GameLabel.Parent = PlayerInfoFrame
-
--- === Example: a push button ===
-local PushBtn = Instance.new("TextButton")
-PushBtn.Size = UDim2.new(1, 0, 0, 36)
-PushBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-PushBtn.Text = "Function 1"
-PushBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-PushBtn.Font = Enum.Font.Gotham
-PushBtn.TextSize = 14
-PushBtn.LayoutOrder = 4
-PushBtn.Parent = ContentFrame
-
-local PushCorner = Instance.new("UICorner")
-PushCorner.CornerRadius = UDim.new(0, 6)
-PushCorner.Parent = PushBtn
-
-local pushDefaultColor = Color3.fromRGB(45, 45, 45)
-local pushActiveColor = Color3.fromRGB(60, 150, 90)
-
-PushBtn.MouseButton1Down:Connect(function()
-    PushBtn.BackgroundColor3 = pushActiveColor
-end)
-
-PushBtn.MouseButton1Up:Connect(function()
-    PushBtn.BackgroundColor3 = pushDefaultColor
-end)
-
-PushBtn.MouseLeave:Connect(function()
-    PushBtn.BackgroundColor3 = pushDefaultColor
-end)
-
-PushBtn.MouseButton1Click:Connect(function()
-    -- === Put your code here ===
-end)
