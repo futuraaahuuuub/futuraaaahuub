@@ -257,9 +257,15 @@ local VerifyKeyCorner = Instance.new("UICorner")
 VerifyKeyCorner.CornerRadius = UDim.new(0, 6)
 VerifyKeyCorner.Parent = VerifyKeyBtn
 
+local VALID_KEY = "zDg4z'R9rj3_b1_{ax_8bDzGB2;294-vt=8~,%6$46!{sgNJ|+"
+
 VerifyKeyBtn.MouseButton1Click:Connect(function()
     local enteredKey = KeyInput.Text
-    -- === Put your key verification logic here ===
+    if enteredKey == VALID_KEY then
+        StatusLabel.Text = "Key valid — access granted."
+    else
+        StatusLabel.Text = "Invalid key."
+    end
 end)
 
 -- === Section: player info ===
